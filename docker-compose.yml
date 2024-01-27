@@ -1,0 +1,44 @@
+version: "3.5"
+
+services:
+    app:
+        tty: true
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        entrypoint: ./entrypoint.sh
+        container_name: exchange-app
+        volumes:
+            - ./frontend:/usr/src/app
+        ports:
+            - "3000:3000"
+        depends_on:
+            - exchange
+        links:
+            - exchange
+
+    exchange:
+        image: node:latest
+        container_name: exchange-api
+        command: bash -c "npm run dev"
+        working_dir: /home/node/app
+        volumes:
+            - ./backend:/home/node/app
+        ports:
+            - "5000:5000"
+        depends_on:
+            - mongo
+            - redis
+        links:
+            - mongo
+            - redis
+
+    mongo:
+        image: mongo:4.2.0
+        ports:
+            - 27017:27017
+
+    redis:
+        image: redis
+        ports:
+            - 6379:6379
