@@ -1,6 +1,3 @@
-[submodule "frontend"]
+[submodule "currency-app"]
 	path = frontend
 	url = git@home.github.com:gabrielmbarboza/currency-app.git
-[submodule "currency-app"]
-	path = currency-app
-	url = git@github.com:gabrielmbarboza/currency-app.git
