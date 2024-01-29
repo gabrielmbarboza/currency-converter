@@ -7,19 +7,19 @@ services:
             context: ./frontend
             dockerfile: Dockerfile
         entrypoint: ./entrypoint.sh
-        container_name: exchange-app
+        container_name: currency-app
         volumes:
             - ./frontend:/usr/src/app
         ports:
             - "3000:3000"
         depends_on:
-            - exchange
+            - api
         links:
-            - exchange
+            - api
 
-    exchange:
+    api:
         image: node:latest
-        container_name: exchange-api
+        container_name: currency-api
         command: bash -c "npm run dev"
         working_dir: /home/node/app
         volumes:
