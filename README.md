@@ -1,13 +1,13 @@
 # Currency Converter
 
-> API de conversão de moedas.
+> Currency Converter API.
 
-API para converter valores de moedas usando diferentes taxas cambiais.
-As taxas cambiais são atualizadas de forma automática a cada 30 minutos.
+API to convert currencies using different exchange rates.
+Exchange rates are updated automatically every 30 minutes.
 
-## Projeto
+## Project
 
-O projeto foi criado com as seguintes tecnologias:
+The project was created using the following technologies:
 
 * Docker
 * docker-compose
@@ -15,30 +15,37 @@ O projeto foi criado com as seguintes tecnologias:
 * MongoDB
 * Redis
 
-## Instalação
+## Installation
 
-**Usando Docker & docker-compose**
+**Using Docker and docker-compose**
 
-Execute o script de criação das moedas suportadas:
-`docker compose run --rm npm install`
+Install the npm packages:
 
-Execute o script de criação das moedas suportadas:
-`docker compose run --rm exchange npm run seed`
+`docker compose run --rm api npm install`
 
-Execute o script de criação de carregamento inicial das taxas de câmbio:
-`docker compose run --rm exchange npm run load:rates`
+Run the script to create suppported currencies:
 
-Inciando o projeto:
-`docker compose up exchange`
+`docker compose run --rm api npm run seed`
 
-![alt text](https://github.com/gabrielmbarboza/currency-converter/blob/main/example.png?raw=true)
+Run the script that loads the initial exchange rates:
 
-## Exemplos de uso da API
-Inserindo uma nova moeda:
+`docker compose run --rm api npm run load:rates`
+
+Starting the project:
+
+`docker compose up api`
+
+## Documentation
+
+`http://0.0.0.0:5000/api-docs/`
+
+## Quick examples of use.
+
+Inserting a new currency:
 
 `POST 0.0.0.0:5000/currencies`
 
-```
+```json
 BODY
   {
     "symbol": "PHP",
@@ -46,11 +53,11 @@ BODY
   }
 ```
 
-Buscando uma moeda:
+Getting a currency:
 
 `GET 0.0.0.0:5000/currencies/PHP`
 
-```
+```json
   {
     "_id": "600905bd9640e7037b38209c",
     "label": "Phillipines Test",
@@ -58,35 +65,37 @@ Buscando uma moeda:
   }
 ```
 
-Removendo uma moeda:
+Removing a currency:
 
 `DELETE 0.0.0.0:5000/currencies/PHP`
 
-Convertendo valores entre diferentes taxas cambiais:
+Converting currencies between different exchange rates:
 
 `GET 0.0.0.0:5000/exchanges/convert?from=USD&to=BRL&amount=123.45`
 
-```
+```json
   {
     "amount": "667.8645"
   }
 ```
 
-## Rodando os testes
+## Running the tests
 
-`docker-compose run --rm exchange npm run test`
+`docker compose run --rm api npm run test`
 
 ## Bonus
 
-No repositório existe um submodulo (frontend) do git, que é um projeto React. Nele exemplifico o uso da API em um projeto web.
-O projeto possuí como dependência a API, ao rodá-lo,  é necessário que a API esteja configurada.
+In this repository, there is a git submodule (frontend) which is a React project. In it, I demonstrate the use of the Currency Converter API in a web project.\
+The project has the Currency Converter API as a dependency, so when you run it, the API must be configured.
 
-Inicialize o submodulo:
+Initialize the submodule:
 
 `git submodule init`
 
-Força o git a clonar o submodulo:
+Forces the git to clone the submodule:
+
 `git submodule update`
 
-Incializa o frontend e suas dependências:
-`docker-compose up app`
+Initialize the frontend app and the backend (API) as dependency:
+
+`docker compose up app`
